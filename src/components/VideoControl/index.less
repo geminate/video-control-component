@@ -1,100 +1,223 @@
-.video-control {
-  background: black;
-  display: inline-block;
-  position: relative;
-  width: 700px;
-  height: 520px;
+@theme-color: #FF9200;
 
+.video-control {
+  width: 100%;
+  height: 100%;
+  background: black;
+  position: relative;
+
+  // 视频主体
   video {
-    width: 700px;
-    height: 520px;
+    width: 100%;
+    height: 100%;
+    background: black;
   }
 
+  // 底部控制
   .control-container {
+    z-index: 9999;
     position: absolute;
-    left: 0;
-    right: 0;
     bottom: 0;
-    padding-bottom: 14px;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .5) 100%);
 
-    // 进度条
-    .progress-container {
-      margin: 14px 10px 0 10px;
+    // 播放/暂停 按钮
+    .play-btn {
+      height: 50px;
+      margin: 15px;
+      background-image: url('../../assets/images/video-play.png');
+      background-size: 100% 100%;
+      cursor: pointer;
 
-      input[type=range] {
-        display: block;
-        width: 100%;
-        outline: none;
-        -webkit-appearance: none;
-        margin: 0 auto;
-        background: linear-gradient(#61bd12, #61bd12) no-repeat, #ddd;
-        background-size: 0 100%;
-        height: 3px;
-      }
+      flex: 0 0 50px;
 
-      input[type=range]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        height: 16px;
-        width: 16px;
-        background: #fff;
-        border-radius: 50%;
-        border: solid 1px #ddd;
+      &.pause {
+        background-image: url('../../assets/images/video-pause.png');
       }
     }
 
-    .btn-container {
-      padding: 0 10px;
-      display: flex;
+    // 时间显示
+    .timer {
+      line-height: 80px;
+      color: white;
+      font-size: 16px;
 
-      .play-btn {
-        flex: 0 0 24px;
-        height: 24px;
-        background-image: url("../../assets/play.png");
-        background-size: 100% 100%;
-        margin-right: 15px;
-      }
+      flex: 0 0 111px;
+    }
 
-      .pause-btn {
-        flex: 0 0 24px;
-        height: 24px;
-        background-image: url("../../assets/pause.png");
-        background-size: 100% 100%;
-        float: left;
-        margin-right: 15px;
-      }
+    // 进度条
+    .progress-container {
+      height: 80px;
+      position: relative;
 
-      .timer {
-        flex: 1 1 auto;
-        color: white;
-        font-size: 16px;
-        float: left;
-        line-height: 24px;
-      }
+      flex: 1 1 auto;
 
-      .volume-button {
-        flex: 0 0 54px;
+      /deep/ .el-slider {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        right: 10px;
+        transform: translate(0%, -50%);
+        cursor: pointer;
 
-        input[type=range] {
-          display: block;
-          width: 100%;
-          outline: none;
-          -webkit-appearance: none;
-          margin: 12px auto;
-          background: -webkit-linear-gradient(#61bd12, #61bd12) no-repeat, #ddd;
-          background-size: 0 100%;
-          height: 3px;
+        .el-slider__runway {
+          overflow: hidden;
+          height: 6px;
+          margin: 0;
+          border-radius: 3px;
+          background: rgba(255, 255, 255, .3);
+
+          .el-slider__bar {
+            height: 6px;
+            background: @theme-color;
+          }
+
+          .el-slider__button-wrapper {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 5px solid @theme-color;
+            border-radius: 50%;
+            box-sizing: border-box;
+            background: #FFF;
+          }
         }
+      }
+    }
 
-        input[type=range]::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          height: 16px;
-          width: 16px;
-          background: #fff;
-          border-radius: 50%;
-          border: solid 1px #ddd;
-        }
+    // 倍速按钮
+    .speed-btn {
+      height: 50px;
+      margin: 15px 20px;
+      border-radius: 25px;
+      line-height: 50px;
+      text-align: center;
+      background: linear-gradient(360deg, rgb(250, 105, 5) 0%, rgb(251, 176, 3) 100%);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
 
+      flex: 0 0 80px;
+
+      span {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    // 声音按钮
+    .volume-button {
+      height: 50px;
+      margin: 15px 0;
+      background-image: url('../../assets/images/video-sound.png');
+      background-size: 100% 100%;
+      cursor: pointer;
+
+      flex: 0 0 50px;
+
+      span {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      &.mute {
+        background-image: url('../../assets/images/video-sound-mute.png');
+      }
+    }
+
+    // 全屏按钮
+    .full-screen-btn {
+      height: 48px;
+      margin: 15px 20px 15px 15px;
+      background-image: url('../../assets/images/video-full-screen.png');
+      background-size: 100% 100%;
+      cursor: pointer;
+
+      flex: 0 0 48px;
+
+      &.is-full {
+        background-image: url('../../assets/images/video-is-full-screen.png');
       }
     }
   }
 }
+
+// 播放速度下拉框
+.speed-dropdown-menu {
+  width: 80px !important;
+
+  .el-dropdown-menu__item {
+    height: 45px;
+    line-height: 45px;
+    color: #CFA890;
+
+    &.active {
+      background: #FFF7EC;
+      color: @theme-color;
+    }
+  }
+}
+
+// 音量调节下拉框
+.volume-dropdown-menu {
+  overflow: hidden;
+  width: 50px !important;
+  background: rgb(255, 247, 236);
+
+  .el-dropdown-menu__item {
+    height: auto;
+    padding: 0;
+
+    p {
+      line-height: 40px;
+      text-align: center;
+      color: @theme-color;
+      font-size: 14px;
+    }
+
+    /deep/ .el-slider__runway {
+      width: 6px;
+      height: 110px;
+      margin: 0 auto 10px auto;
+      border-radius: 2px;
+      background: rgba(0, 0, 0, .15);
+
+      .el-slider__bar {
+        width: 6px;
+        background: @theme-color;
+      }
+
+      .el-slider__button-wrapper {
+        left: -16px;
+      }
+
+      .el-slider__button {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        left: 1px;
+        border: 5px solid @theme-color;
+        border-radius: 50%;
+        box-sizing: border-box;
+        background: #FFF;
+      }
+    }
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+

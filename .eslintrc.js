@@ -1,5 +1,3 @@
-// https://eslint.org/docs/user-guide/configuring
-
 module.exports = {
   root: true,
   parserOptions: {
@@ -9,31 +7,25 @@ module.exports = {
     browser: true,
   },
   extends: [
-    // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
-    // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/essential',
-    // https://github.com/standard/standard/blob/master/docs/RULES-en.md
     'standard',
   ],
-  // required to lint *.vue files
   plugins: [
     'html',
     'vue',
   ],
-  // add your custom rules here
   rules: {
-    // allow async-await
+    'no-async-promise-executor': 'off',
+    'one-var': 'off',
+    'prefer-promise-reject-errors': 'off',
+    'vue/no-use-v-if-with-v-for': 'off',
     'generator-star-spacing': 'off',
-
     'no-return-await': 'off',
-
-    'vue/script-indent': ['error', 2, {  // script标签缩进设置
+    'vue/script-indent': ['error', 2, {
       'baseIndent': 1,
       'switchCase': 0,
       'ignores': []
     }],
-
-    // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
   overrides: [
