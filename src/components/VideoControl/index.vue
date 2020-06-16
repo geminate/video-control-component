@@ -30,7 +30,7 @@
         </div>
 
         <!-- 倍速按钮 -->
-        <el-dropdown ref="speedDrop" class="speed-btn" trigger="click" @command="changeSpeed">
+        <el-dropdown ref="speedDrop" class="speed-btn" trigger="click" @command="changeSpeed" placement="top">
           <span>倍速</span>
           <el-dropdown-menu class="speed-dropdown-menu" slot="dropdown">
             <el-dropdown-item command="0.5" :class="{active:playSpeed === 0.5}">0.5X</el-dropdown-item>
@@ -42,7 +42,8 @@
         </el-dropdown>
 
         <!-- 音量调节按钮 -->
-        <el-dropdown ref="volumeDrop" class="volume-button" :class="{mute:volume === 0}" trigger="click">
+        <el-dropdown ref="volumeDrop" class="volume-button" :class="{mute:volume === 0}" trigger="click"
+                     placement="top">
           <span></span>
           <el-dropdown-menu class="volume-dropdown-menu" slot="dropdown">
             <el-dropdown-item>
@@ -104,14 +105,14 @@
 
       // 重置/初始化 隐藏控件定时器
       initTimer (e) {
-        if (e && e.type === 'mousemove') {
-          this.showController = true
-          this.timer && clearTimeout(this.timer)
-          this.timer = setTimeout(() => {
-            this.showController = false
-          }, 5000)
-          this.lastMoveTime = new Date()
-        }
+        // if (e && e.type === 'mousemove') {
+        //   this.showController = true
+        //   this.timer && clearTimeout(this.timer)
+        //   this.timer = setTimeout(() => {
+        //     this.showController = false
+        //   }, 5000)
+        //   this.lastMoveTime = new Date()
+        // }
       },
 
       // 初始化 ESC 按钮按下事件
