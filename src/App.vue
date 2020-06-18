@@ -18,7 +18,7 @@
 </script>
 
 <style>
-  @import "../static/reset.css";
+  @import url("./assets/css/main.less");
 
   .video-control-container {
     width: 950px;

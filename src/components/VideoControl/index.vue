@@ -1,6 +1,7 @@
 <!-- 视频播放组件 -->
 <template>
-  <div class="video-control" @mousemove="initTimer" @touchstart="initTimer" @click="initTimer" ref="videoControl">
+  <div class="video-control" ref="videoControl">
+
     <!-- 视频主体 -->
     <video ref="video" :src="src"
            @durationchange="onDurationChange"
@@ -11,21 +12,22 @@
     </video>
 
     <!-- 控制组件 -->
-    <transition name="fade">
-      <div class="control-container" v-show="showController">
-        <play-btn class="play-btn" v-model="playStatus"></play-btn>
-        <progress-bar class="progress-bar" ref="progressBar" v-model="timeProcess"
-                      @click="setCurrentTime"></progress-bar>
-        <speed-btn class="speed-btn" v-model="playSpeed"></speed-btn>
-        <volume-btn class="volume-button" v-model="volume"></volume-btn>
-        <full-screen-btn class="full-screen-btn" ref="fullScreenBtn" v-model="isFullScreen"></full-screen-btn>
-      </div>
-    </transition>
+    <div class="control-container">
+      <progress-bar class="progress-bar" ref="progressBar" v-model="timeProcess" @click="setCurrentTime"></progress-bar>
+      <play-btn class="play-btn" v-model="playStatus"></play-btn>
+      <video-timer class="video-timer" :duration="duration" :currentTime="currentTime"></video-timer>
+      <danmu-input class="danmu-input"></danmu-input>
+      <speed-btn class="speed-btn" v-model="playSpeed"></speed-btn>
+      <volume-btn class="volume-button" v-model="volume"></volume-btn>
+      <full-screen-btn class="full-screen-btn" ref="fullScreenBtn" v-model="isFullScreen"></full-screen-btn>
+    </div>
   </div>
 </template>
 
 <script>
   import PlayBtn from './PlayBtn'
+  import VideoTimer from './VideoTimer'
+  import DanmuInput from './DanmuInput'
   import ProgressBar from './ProgressBar'
   import SpeedBtn from './SpeedBtn'
   import VolumeBtn from './VolumeBtn'
@@ -33,13 +35,10 @@
 
   export default {
     name: 'videoPage',
-    components: { PlayBtn, ProgressBar, SpeedBtn, VolumeBtn, FullScreenBtn },
+    components: { DanmuInput, PlayBtn, VideoTimer, ProgressBar, SpeedBtn, VolumeBtn, FullScreenBtn },
     props: ['src'],
     data () {
       return {
-        showController: true, // 是否显示控制栏
-        timer: null, // 控制栏显隐计时器
-
         duration: 0, // 视频总秒数
         currentTime: 0, // 当前播放秒数
         playStatus: false, // 视频是否正在播放
@@ -69,13 +68,6 @@
       }
     },
     methods: {
-      initTimer () {
-        this.showController = true
-        this.timer && clearTimeout(this.timer)
-        this.timer = setTimeout(() => {
-          this.showController = false
-        }, 5000)
-      },
       onDurationChange () {
         this.duration = this.$refs.video.duration
       },

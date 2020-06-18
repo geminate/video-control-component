@@ -1,11 +1,7 @@
-@theme-color: #FF9200;
-
 // 进度条
 .progress-container {
-  height: 80px;
+  height: 4px;
   position: relative;
-
-  flex: 1 1 auto;
 
   /deep/ .el-slider {
     position: absolute;
@@ -16,27 +12,29 @@
     cursor: pointer;
 
     .el-slider__runway {
-      overflow: hidden;
-      height: 6px;
+      height: 4px;
       margin: 0;
-      border-radius: 3px;
       background: rgba(255, 255, 255, .3);
 
       .el-slider__bar {
-        height: 6px;
-        background: @theme-color;
+        height: 4px;
+        background: cornflowerblue;
       }
 
       .el-slider__button-wrapper {
         position: absolute;
         top: 50%;
         transform: translate(-50%, -50%);
-        width: 20px;
-        height: 20px;
-        border: 5px solid @theme-color;
+        width: 13px;
+        height: 13px;
         border-radius: 50%;
         box-sizing: border-box;
-        background: #FFF;
+        background: white;
+        border: 3px solid cornflowerblue;
+
+        .el-slider__button {
+          display: none;
+        }
       }
     }
   }
