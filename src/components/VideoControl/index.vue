@@ -13,7 +13,7 @@
 
     <!-- 控制组件 -->
     <div class="control-container">
-      <progress-bar class="progress-bar" ref="progressBar" v-model="timeProcess" @click="setCurrentTime"></progress-bar>
+      <progress-bar class="progress-bar" :progress="timeProcess" @change="setCurrentTime"></progress-bar>
       <play-btn class="play-btn" v-model="playStatus"></play-btn>
       <video-timer class="video-timer" :duration="duration" :currentTime="currentTime"></video-timer>
       <danmu-input class="danmu-input"></danmu-input>
@@ -60,11 +60,6 @@
       },
       playSpeed (val) {
         this.$refs.video.playbackRate = val
-      },
-      timeProcess (val) {
-        if (this.$refs.progressBar.isDragging()) {
-          this.setCurrentTime()
-        }
       }
     },
     methods: {
@@ -81,8 +76,9 @@
       onPause () {
         this.playStatus = false
       },
-      setCurrentTime () {
-        this.$refs.video.currentTime = (this.$refs.video.duration * this.timeProcess) / 100
+      setCurrentTime (val) {
+        this.timeProcess = val
+        this.$refs.video.currentTime = (this.$refs.video.duration * val) / 100
       }
     }
   }
