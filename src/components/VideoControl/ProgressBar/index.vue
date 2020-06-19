@@ -1,6 +1,7 @@
 <template>
   <div class="progress-container" @click="onProgressClick" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave"
        @mousemove="onMouseMove" ref="progressContainer">
+    <focus-preview class="focus-preview"></focus-preview>
     <video-preview v-show="showPreview" class="video-preview" :previewX="previewX"
                    :previewPercent="previewPercent"></video-preview>
     <el-slider v-model="timeProcess" :step="0.00001" :show-tooltip="false" ref="slider"></el-slider>
@@ -9,10 +10,11 @@
 
 <script>
   import VideoPreview from './VideoPreview'
+  import FocusPreview from './FocusPreview'
 
   export default {
     name: 'VideoCore',
-    components: { VideoPreview },
+    components: { VideoPreview, FocusPreview },
     props: ['value'],
     data () {
       return {

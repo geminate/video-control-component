@@ -21,7 +21,7 @@
   @import url("./assets/css/main.less");
 
   .video-control-container {
-    width: 950px;
-    height: 600px;
+    width: 1050px;
+    height: 700px;
   }
 </style>
