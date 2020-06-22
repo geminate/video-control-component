@@ -2,15 +2,20 @@
 <template>
   <div class="video-control" ref="videoControl">
 
+    <div class="loading" v-show="showLoading"></div>
+
     <!-- 视频主体 -->
     <video ref="video"
            preload="auto"
            :src="src"
+           @loadstart="onLoadStart"
            @durationchange="onDurationChange"
            @timeupdate="onTimeUpdate"
            @play="onPlay"
            @pause="onPause"
            @progress="onProgress"
+           @playing="onPlaying"
+           @waiting="onWaiting"
     >
     </video>
 
@@ -50,7 +55,8 @@
         volume: 80, // 音量大小
         playSpeed: 1, // 播放速率
         timeProcess: 0, // 当前播放进度占总长的的百分比
-        buffered: 0
+        buffered: 0,
+        showLoading: false
       }
     },
     watch: {
@@ -68,9 +74,19 @@
       }
     },
     methods: {
+      onLoadStart () {
+        this.showLoading = true
+      },
+      onWaiting () {
+        this.showLoading = true
+      },
+      onPlaying () {
+        this.showLoading = false
+      },
       onDurationChange () {
         this.duration = this.$refs.video.duration
         this.setBuffered()
+        this.showLoading = false
       },
       onTimeUpdate () {
         this.currentTime = this.$refs.video.currentTime
