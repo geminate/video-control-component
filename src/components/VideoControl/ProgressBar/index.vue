@@ -13,7 +13,7 @@
          @mouseenter="onMouseEnter"
          @mouseleave="onMouseLeave"
          @mousemove="onMouseMove">
-      <slider-bar class="slider-bar" :progress="progress" @change="onChange"></slider-bar>
+      <slider-bar class="slider-bar" :progress="progress" :buffered="buffered" @change="onChange"></slider-bar>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@
   export default {
     name: 'VideoCore',
     components: { VideoPreview, FocusPreview, SliderBar },
-    props: ['progress'],
+    props: ['progress', 'buffered'],
     data () {
       return {
         showPreview: false,

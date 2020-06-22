@@ -1,9 +1,8 @@
 <template>
-  <div class="slider-bar">
-    <div class="slider-bar-run-way" @click="onClick" ref="runWay">
-      <div class="slider-bar-progress" :style="{width: progressData + '%'}">
-        <div class="slider-bar-button" @mousedown="onMouseDown"></div>
-      </div>
+  <div class="slider-bar" @click="onClick" ref="runWay">
+    <div class="buffered-bar" :style="{width: buffered + '%'}"></div>
+    <div class="slider-bar-progress" :style="{width: progressData + '%'}">
+      <div class="slider-bar-button" @mousedown="onMouseDown"></div>
     </div>
   </div>
 </template>
@@ -11,7 +10,7 @@
 <script>
   export default {
     name: 'SliderBar',
-    props: ['progress'],
+    props: ['progress', 'buffered'],
     data () {
       return {
         progressData: this.progress,
