@@ -1,14 +1,6 @@
 <template>
   <el-dropdown ref="volumeDrop" class="volume-button" placement="top" :hide-on-click="false">
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="white">
-        <path v-show="volume !== 0"
-              d="M10.188 4.65L6 8H5a2 2 0 00-2 2v2a2 2 0 002 2h1l4.188 3.35a.5.5 0 00.812-.39V5.04a.498.498 0 00-.812-.39zM14.446 3.778a1 1 0 00-.862 1.804 6.002 6.002 0 01-.007 10.838 1 1 0 00.86 1.806A8.001 8.001 0 0019 11a8.001 8.001 0 00-4.554-7.222z"></path>
-        <path d="M15 11a3.998 3.998 0 00-2-3.465v6.93A3.998 3.998 0 0015 11z"></path>
-        <path v-show="volume === 0"
-              d="M13.583 5.583A5.998 5.998 0 0117 11a6 6 0 01-.585 2.587l1.477 1.477a8.001 8.001 0 00-3.446-11.286 1 1 0 00-.863 1.805zM18.778 18.778l-2.121-2.121-1.414-1.414-1.415-1.415L13 13l-2-2-3.889-3.889-3.889-3.889a.999.999 0 10-1.414 1.414L5.172 8H5a2 2 0 00-2 2v2a2 2 0 002 2h1l4.188 3.35a.5.5 0 00.812-.39v-3.131l2.587 2.587-.01.005a1 1 0 00.86 1.806c.215-.102.424-.214.627-.333l2.3 2.3a1.001 1.001 0 001.414-1.416zM11 5.04a.5.5 0 00-.813-.39L8.682 5.854 11 8.172V5.04z"></path>
-      </svg>
-    </div>
+    <div class="volume-button-icon" :class="{'mute': volume === 0}" @click="toggleMute"></div>
     <el-dropdown-menu class="volume-dropdown-menu" slot="dropdown" :append-to-body="false">
       <el-dropdown-item>
         <p>{{volume}}%</p>
@@ -36,7 +28,12 @@
         this.$emit('input', newVal)
       }
     },
-    methods: {}
+    methods: {
+      // 静音切换
+      toggleMute () {
+        this.volume === 0 ? this.volume = 50 : this.volume = 0
+      }
+    }
   }
 </script>
 

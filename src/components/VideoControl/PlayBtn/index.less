@@ -1,11 +1,12 @@
 // 播放/暂停 按钮
 .play-btn {
+  background-image: url("../../../assets/images/play.svg");
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  cursor: pointer;
 
-  svg {
-    display: block;
-    width: 24px;
-    height: 44px;
-    margin: 0 auto;
-    cursor: pointer;
+  &.pause {
+    background-image: url("../../../assets/images/pause.svg");
   }
 }
