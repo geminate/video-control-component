@@ -1,23 +1,27 @@
 <template>
-  <el-dropdown ref="volumeDrop" class="volume-button" placement="top" :hide-on-click="false">
+  <div class="volume-button" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <div class="volume-button-icon" :class="{'mute': volume === 0}" @click="toggleMute"></div>
-    <el-dropdown-menu class="volume-dropdown-menu" slot="dropdown" :append-to-body="false">
-      <el-dropdown-item>
+    <div class="volume-dropdown-menu" :class="{'show':showDropDown}">
+      <div class="volume-dropdown-item">
         <p>{{volume}}%</p>
-        <el-slider v-model="volume" vertical :show-tooltip="false"></el-slider>
-      </el-dropdown-item>
-    </el-dropdown-menu>
-  </el-dropdown>
+        <slider-bar class="slider-bar" v-model="volume"></slider-bar>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+  import SliderBar from './SliderBar'
+
   export default {
     name: 'VideoCore',
+    components: { SliderBar },
     props: ['value'],
     data () {
       return {
         volume: this.value,
-        showSlide: false
+        showDropDown: false,
+        timer: null // 下拉菜单展示延迟计时器
       }
     },
     watch: {
@@ -32,6 +36,18 @@
       // 静音切换
       toggleMute () {
         this.volume === 0 ? this.volume = 50 : this.volume = 0
+      },
+      onMouseEnter () {
+        this.timer && clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.showDropDown = true
+        }, 250)
+      },
+      onMouseLeave () {
+        this.timer && clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.showDropDown = false
+        }, 250)
       }
     }
   }

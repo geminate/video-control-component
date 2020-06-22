@@ -1,5 +1,6 @@
 .volume-button {
   height: 100%;
+  position: relative;
 
   .volume-button-icon {
     background-image: url("../../../assets/images/volume.svg");
@@ -22,8 +23,20 @@
     border: none;
     outline: none;
     padding: 0;
+    position: absolute;
+    left: 0;
+    top: -2px;
+    transform: translate(-7px, -100%) scaleY(0);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(.23, 1, .32, 1), opacity .3s cubic-bezier(.23, 1, .32, 1);
+    transform-origin: center bottom;
 
-    .el-dropdown-menu__item {
+    &.show {
+      opacity: 1;
+      transform: translate(-7px, -100%) scaleY(1);
+    }
+
+    .volume-dropdown-item {
       height: auto;
       padding: 0;
       outline: none;
@@ -35,42 +48,8 @@
         text-align: center;
         color: rgba(255, 255, 255, 0.8);
         font-size: 14px;
+        user-select: none;
       }
-
-      /deep/ .el-slider__runway {
-        position: relative;
-        width: 2px;
-        height: 80px;
-        margin: 0 auto 10px auto;
-        border-radius: 1px;
-        background: white;
-
-        .el-slider__bar {
-          position: absolute;
-          width: 2px;
-          border-radius: 1px;
-          background: cornflowerblue;
-        }
-
-        .el-slider__button-wrapper {
-          position: absolute;
-          left: 50%;
-          transform: translate(-50%, 50%);
-          width: 10px;
-          height: 10px;
-          background: cornflowerblue;
-          border-radius: 50%;
-          box-sizing: border-box;
-
-          .el-slider__button {
-            display: none
-          }
-        }
-      }
-    }
-
-    & /deep/ .popper__arrow {
-      display: none;
     }
   }
 }
