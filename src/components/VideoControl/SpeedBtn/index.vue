@@ -1,14 +1,17 @@
 <template>
-  <el-dropdown ref="speedDrop" class="speed-btn" @command="changeSpeed" placement="top">
+  <div class="speed-btn" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <span class="text">{{playSpeed === 1 ? '倍速' : playSpeed + 'x'}}</span>
-    <el-dropdown-menu class="speed-dropdown-menu" slot="dropdown" :append-to-body="false">
-      <el-dropdown-item command="0.5" :class="{active:playSpeed === 0.5}">0.5x</el-dropdown-item>
-      <el-dropdown-item command="0.75" :class="{active:playSpeed === 0.75}">0.75x</el-dropdown-item>
-      <el-dropdown-item command="1" :class="{active:playSpeed === 1}">1.0x</el-dropdown-item>
-      <el-dropdown-item command="1.5" :class="{active:playSpeed === 1.5}">1.5x</el-dropdown-item>
-      <el-dropdown-item command="2" :class="{active:playSpeed === 2}">2.0x</el-dropdown-item>
-    </el-dropdown-menu>
-  </el-dropdown>
+    <div class="speed-dropdown-menu" :class="{'show':showDropDown}">
+      <div v-for="item in speedArray"
+           :key="item"
+           class="speed-dropdown-item"
+           :class="{active:playSpeed === item}"
+           @click="changeSpeed(item)"
+      >
+        {{item}}x
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -17,7 +20,10 @@
     props: ['value'],
     data () {
       return {
-        playSpeed: this.value
+        playSpeed: this.value, // 当前播放速度
+        speedArray: [0.5, 0.75, 1, 1.5, 2], // 可选速度数组
+        showDropDown: false, // 是否显示下拉菜单
+        timer: null // 下拉菜单展示延迟计时器
       }
     },
     watch: {
@@ -30,7 +36,20 @@
     },
     methods: {
       changeSpeed (playSpeed) {
-        this.playSpeed = Number(playSpeed)
+        this.playSpeed = playSpeed
+        this.showDropDown = false
+      },
+      onMouseEnter () {
+        this.timer && clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.showDropDown = true
+        }, 250)
+      },
+      onMouseLeave () {
+        this.timer && clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.showDropDown = false
+        }, 250)
       }
     }
   }

@@ -1,5 +1,6 @@
 // 倍速按钮
 .speed-btn {
+  position: relative;
 
   .text {
     color: white;
@@ -11,16 +12,27 @@
     display: block;
     outline: none;
     cursor: pointer;
-    user-select:none;
+    user-select: none;
   }
 
-  // 播放速度下拉框
   .speed-dropdown-menu {
     width: 70px;
     background: rgb(40, 40, 40);
     border: none;
+    position: absolute;
+    left: 0;
+    top: -2px;
+    transform: translate(-18px, -100%) scaleY(0);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(.23, 1, .32, 1), opacity .3s cubic-bezier(.23, 1, .32, 1);
+    transform-origin: center bottom;
 
-    .el-dropdown-menu__item {
+    &.show {
+      opacity: 1;
+      transform: translate(-18px, -100%) scaleY(1);
+    }
+
+    .speed-dropdown-item {
       text-align: center;
       height: 36px;
       line-height: 36px;
@@ -37,9 +49,6 @@
         color: cornflowerblue;
       }
     }
-
-    & /deep/ .popper__arrow {
-      display: none;
-    }
   }
+
 }
