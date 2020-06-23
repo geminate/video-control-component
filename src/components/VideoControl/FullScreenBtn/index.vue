@@ -1,3 +1,4 @@
+<!-- 全屏按钮 -->
 <template>
   <div class="full-screen-btn" @click="onClick"></div>
 </template>
@@ -8,7 +9,7 @@
     props: ['value'],
     data () {
       return {
-        isFullScreen: this.value
+        isFullScreen: this.value // 当前是否是全屏状态
       }
     },
     watch: {
@@ -20,11 +21,8 @@
       }
     },
     methods: {
-      onClick () {
-        this.isFullScreen = !this.isFullScreen
-      },
 
-      // 初始化全屏
+      // 监听全屏事件
       initFullScreen () {
         document.addEventListener('fullscreenchange', this.onFullScreenChange)
         document.addEventListener('webkitfullscreenchange', this.onFullScreenChange)
@@ -32,7 +30,17 @@
         document.addEventListener('MSFullscreenChange', this.onFullScreenChange)
       },
 
-      // 切换全屏
+      // 进入退出全屏时修改全屏状态
+      onFullScreenChange (e) {
+        this.isFullScreen = !!document.fullscreenElement
+      },
+
+      // 按钮点击切换全屏/非全屏
+      onClick () {
+        this.isFullScreen = !this.isFullScreen
+      },
+
+      // 切换全屏/非全屏，由父组件调用，传入全屏dom
       toggleFullScreen (element) {
         if (!this.isFullScreen) {
           this.exitFullscreen()
@@ -52,11 +60,6 @@
         } else if (element.webkitRequestFullscreen) {
           element.webkitRequestFullScreen()
         }
-      },
-
-      // 进入/退出全屏
-      onFullScreenChange (e) {
-        this.isFullScreen = !!document.fullscreenElement
       },
 
       // 退出全屏

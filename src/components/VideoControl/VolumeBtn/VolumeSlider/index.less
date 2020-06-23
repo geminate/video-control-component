@@ -1,4 +1,4 @@
-.slider-bar {
+.volume-slider {
   position: relative;
   width: 3px;
   height: 80px;
@@ -7,24 +7,23 @@
   background: white;
   cursor: pointer;
 
-  .slider-bar-progress {
+  .slider-progress {
     position: absolute;
     bottom: 0;
     width: 3px;
     border-radius: 1.5px;
     background: cornflowerblue;
 
-    .slider-bar-button {
+    .slider-button {
       position: absolute;
       top: 0;
       left: 50%;
-      transform: translate(-50%, -50%);
       width: 10px;
       height: 10px;
-      background: cornflowerblue;
       border-radius: 50%;
       box-sizing: border-box;
+      background: cornflowerblue;
+      transform: translate(-50%, -50%);
     }
   }
-
 }

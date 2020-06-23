@@ -1,3 +1,4 @@
+<!-- 播放速度控制按钮 -->
 <template>
   <div class="speed-btn" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
     <span class="text">{{playSpeed === 1 ? '倍速' : playSpeed + 'x'}}</span>
@@ -16,7 +17,7 @@
 
 <script>
   export default {
-    name: 'VideoCore',
+    name: 'SpeedBtn',
     props: ['value'],
     data () {
       return {
@@ -35,16 +36,22 @@
       }
     },
     methods: {
+
+      // 改变播放速度
       changeSpeed (playSpeed) {
         this.playSpeed = playSpeed
         this.showDropDown = false
       },
+
+      // 鼠标移入展示下拉菜单
       onMouseEnter () {
         this.timer && clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           this.showDropDown = true
         }, 250)
       },
+
+      // 鼠标移出隐藏下拉菜单
       onMouseLeave () {
         this.timer && clearTimeout(this.timer)
         this.timer = setTimeout(() => {

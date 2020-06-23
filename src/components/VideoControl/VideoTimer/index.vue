@@ -1,3 +1,4 @@
+<!-- 播放时间展示 -->
 <template>
   <div class="video-timer">
     {{secondToMinute(currentTime)}} / {{secondToMinute(duration)}}
@@ -8,9 +9,6 @@
   export default {
     name: 'VideoTimer',
     props: ['duration', 'currentTime'],
-    data () {
-      return {}
-    },
     methods: {
 
       // 秒数转为分钟时间显示

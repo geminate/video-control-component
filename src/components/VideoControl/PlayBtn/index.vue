@@ -9,7 +9,7 @@
     props: ['value'],
     data () {
       return {
-        playStatus: this.value
+        playStatus: this.value // 当前是否正在播放
       }
     },
     watch: {
@@ -21,7 +21,7 @@
       }
     },
     methods: {
-      onClick () {
+      onClick () { // 按钮点击切换播放状态
         this.playStatus = !this.playStatus
       }
     }
