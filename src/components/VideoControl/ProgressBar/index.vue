@@ -2,7 +2,7 @@
   <div class="progress-container">
 
     <!-- 高能进度条 -->
-    <focus-preview class="focus-preview"></focus-preview>
+    <focus-preview class="focus-preview" :playedDuration="playedDuration"></focus-preview>
 
     <!-- 视频预览 -->
     <video-preview v-show="showPreview" class="video-preview" :previewX="previewX" :previewPercent="previewPercent">
@@ -26,7 +26,7 @@
   export default {
     name: 'VideoCore',
     components: { VideoPreview, FocusPreview, SliderBar },
-    props: ['progress', 'buffered'],
+    props: ['progress', 'buffered', 'playedDuration'],
     data () {
       return {
         showPreview: false,

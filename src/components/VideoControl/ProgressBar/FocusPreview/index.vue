@@ -9,8 +9,16 @@
 
         <!-- 已播放区域剪切 -->
         <clipPath id="pbp-played-path">
-          <rect x="0" width="30%" y="0" height="100%"></rect>
-          <rect x="45%" width="30%" y="0" height="100%"></rect>
+          <rect v-for="(item,i) in playedDuration.playedArray"
+                :key="i"
+                :x="item[0]+'%'"
+                :width="item[1]+'%'"
+                y="0"
+                height="100%"></rect>
+          <rect :x="playedDuration.playingDuration[0] + '%'"
+                :width="playedDuration.playingDuration[1] + '%'"
+                y="0"
+                height="100%"></rect>
         </clipPath>
       </defs>
       <g fill-opacity="0.2" clip-path="url(#pbp-curve-path)">
@@ -26,6 +34,7 @@
 
   export default {
     name: 'FocusPreview',
+    props: ['playedDuration'],
     data () {
       return {
         curveData: value

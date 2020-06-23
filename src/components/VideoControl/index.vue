@@ -16,13 +16,15 @@
            @progress="onProgress"
            @playing="onPlaying"
            @waiting="onWaiting"
+           @seeking="onSeeking"
+           @seeked="onSeeked"
     >
     </video>
 
     <!-- 控制组件 -->
     <div class="control-container">
       <progress-bar class="progress-bar" :progress="timeProcess" @change="setCurrentTime"
-                    :buffered="buffered"></progress-bar>
+                    :buffered="buffered" :playedDuration="playedDuration"></progress-bar>
       <play-btn class="play-btn" v-model="playStatus"></play-btn>
       <video-timer class="video-timer" :duration="duration" :currentTime="currentTime"></video-timer>
       <danmu-input class="danmu-input"></danmu-input>
@@ -56,7 +58,14 @@
         playSpeed: 1, // 播放速率
         timeProcess: 0, // 当前播放进度占总长的的百分比
         buffered: 0,
-        showLoading: false
+        showLoading: false,
+        playedDuration: {
+          playedArray: [],
+          playingDuration: [0, 0],
+          startTemp: 0,
+          endTemp: 0
+        },
+        isSeeking: false
       }
     },
     watch: {
@@ -74,6 +83,24 @@
       }
     },
     methods: {
+      addPlayedArray (currentTime) {
+        const x = this.playedDuration.startTemp / this.duration * 100
+        const width = currentTime / this.duration * 100 - x
+        this.playedDuration.playedArray.push([x, width])
+      },
+      refreshPlayingDuration () {
+        const x = this.isSeeking ? (this.currentTime / this.duration * 100) : (this.playedDuration.startTemp / this.duration * 100)
+        const width = this.currentTime / this.duration * 100 - x
+        this.playedDuration.playingDuration = [x, width]
+      },
+      onSeeking () {
+        this.isSeeking = true
+        this.addPlayedArray(this.currentTime)
+      },
+      onSeeked () {
+        this.isSeeking = false
+        this.playedDuration.startTemp = this.currentTime
+      },
       onLoadStart () {
         this.showLoading = true
       },
@@ -81,6 +108,7 @@
         this.showLoading = true
       },
       onPlaying () {
+        this.playedDuration.startTemp = this.currentTime
         this.showLoading = false
       },
       onDurationChange () {
@@ -88,9 +116,10 @@
         this.setBuffered()
         this.showLoading = false
       },
-      onTimeUpdate () {
+      onTimeUpdate (a, b) {
         this.currentTime = this.$refs.video.currentTime
         this.timeProcess = (this.$refs.video.currentTime / this.$refs.video.duration) * 100
+        this.refreshPlayingDuration()
       },
       onProgress () {
         this.setBuffered()
